@@ -1,0 +1,147 @@
+###like a simple test client(browser)
+http://localhost:4004/odata/v4/MyService/anubhav(name = 'Sumanth')
+
+###Consume the service document -- describe what are the entities part of the service
+http://localhost:4004/odata/v4/CatalogService
+
+###metadata document of the service
+http://localhost:4004/odata/v4/CatalogService/$metadata
+
+###Read my all employee data
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+Authorization: Basic anubhav:Welcome1
+
+###Read only the relevant fields from all employees
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$select=ID,nameFirst,nameLast,sex,email
+
+###To get the total count
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet/$count
+
+###pagination -- load data by chunk by chunk for performance - $top & $skip
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$top=2&$skip=2
+
+###load a single employee by key
+###when you practice always take the id from last call
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet/02BD2137-0890-1EEA-A6C2-BB55C197C7FB
+
+###another way of passing
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet('02BD2137-0890-1EEA-A6C2-BB55C197C7FB')
+
+###How to filter the data based on condition
+###select * from emp where = 'my bank'
+###eq,nq,ge,le,lt,gt
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=bankName eq 'My Bank of San Francisco' 
+
+###http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=bankName eq 'My Bank of San Francisco'&top=2
+
+###for V2
+http://localhost:4004/odata/v2/CatalogService/EmployeeSet?$filter=bankName eq 'My Bank of San Francisco'
+
+###can we filter based on pattern match
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$filter=contains(nameFirst, 'Su')
+
+###sorting data -- orderby
+http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$orderby=salaryAmount desc
+
+###load the purchase order data
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet
+
+###get single purchase order
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC28052
+
+###get item data for above purchase order
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC28052/Items
+
+###load order header of as single record with all its items
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC28052?$expand=Items
+
+###Using cdsview we do lazy loading
+http://localhost:4004/odata/v4/CDSservice/ProductSet/74867AD200E41EDBA5D8B06B26EB4052?$expand=To_Items
+
+###v4 filtering of child data also
+http://localhost:4004/odata/v4/CDSservice/ProductSet/74867AD200E41EDBA5D8B06B26EB4052?$expand=To_Items($filter=TaxAmount le 500)
+
+###create operation to insert data into database
+POST http://localhost:4004/odata/v4/CatalogService/EmployeeSet
+Authorization: Basic ananya:ananya
+Content-Type: application/json
+
+{
+  "nameFirst": "Jack",
+  "nameMiddle": "Richard",
+  "nameLast": "madrid", 
+  "nameInitials": null,
+  "sex": "M",
+  "language": "E",
+  "phoneNumber": null,
+  "email": "jackmadrid@sap.com",
+  "loginName": "JACK",
+  "Currency_code": "EUR",
+  "salaryAmount": 1000000,
+  "accountNumber": "7766885444",
+  "bankId": "121000",
+  "bankName": "My Bank of San madrid"
+}
+
+###to update the data
+PATCH http://localhost:4004/odata/v4/CatalogService/EmployeeSet/71c48b68-036d-4fcd-9b9f-26d0e70da702
+Content-Type: application/json
+
+{
+    "salaryAmount" : "199999"
+}
+
+
+###to delete the data
+DELETE http://localhost:4004/odata/v4/CatalogService/EmployeeSet/71c48b68-036d-4fcd-9b9f-26d0e70da702
+
+###Testing deep insert - pass batch of data together header+item
+POST http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet
+Content-Type: application/json
+
+{
+  "CURRENCY_code": "EUR",
+  "GROSS_AMOUNT": 3913.91,
+  "NET_AMOUNT": 3289.00,
+  "TAX_AMOUNT": 624.91,
+  "NODE_KEY": "74867AD200E41EDBA5D8B0C98DC26066",
+  "PO_ID": "305555555",
+  "PARTNER_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06885B04052",
+  "LIFECYCLE_STATUS": "N",
+  "OVERALL_STATUS": "P",
+  "NOTE": "Example for deep insert",
+  "Items": [
+    {
+      "CURRENCY_code": "ARS",
+      "GROSS_AMOUNT": 154.7,
+      "NET_AMOUNT": 130,
+      "TAX_AMOUNT": 24.7,
+      "NODE_KEY": "74867AD200E41EDBA5D8B0CBD35A6061",
+      "PO_ITEM_POS": 10,
+      "PRODUCT_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06B26F60052"
+    },
+    {
+      "CURRENCY_code": "ARS",
+      "GROSS_AMOUNT": 402.22,
+      "NET_AMOUNT": 338,
+      "TAX_AMOUNT": 64.22,
+      "NODE_KEY": "74867AD200E41EDBA5D8B0CBD35A6062",
+      "PO_ITEM_POS": 20,
+      "PRODUCT_GUID_NODE_KEY": "74867AD200E41EDBA5D8B06B26F06052"
+    }
+  ]
+}
+
+###test the function to load top 3 POs
+http://localhost:4004/odata/v4/CatalogService/getLargestOrder()
+
+###Read my order data
+http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC28052
+
+###calling action using POST 
+POST http://localhost:4004/odata/v4/CatalogService/PurchaseOrderSet/74867AD200E41EDBA5D8B0C98DC28052/boost
+Content-Type: application/json
+
+{
+  
+}

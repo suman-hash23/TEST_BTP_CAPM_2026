@@ -1,0 +1,20 @@
+{
+  "name": "mycapm-ui",
+  "version": "1.0.0",
+  "description": "my first approuter in btp",
+  "main": "index.js",
+  "scripts": {
+    "start": "node node_modules/@sap/approuter/approuter.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "fiori",
+    "approuter",
+    "anubhav"
+  ],
+  "author": "sumanth",
+  "license": "ISC",
+  "dependencies": {
+    "@sap/approuter": "^20.10.0"
+  }
+}
