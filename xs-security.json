@@ -1,5 +1,6 @@
 {
  "xsappname": "mycapm",
+ "tenant-mode": "dedicated",
  "scopes": [
   {
    "name": "$XSAPPNAME.Display",
