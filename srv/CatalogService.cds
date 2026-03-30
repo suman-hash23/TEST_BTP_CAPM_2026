@@ -5,10 +5,10 @@ service CatalogService @(path : 'CatalogService', requires : 'authenticated-user
 
 //Entity - representation of an end point of data to perform CURDQ operations
     entity EmployeeSet @(restrict :[
-                        {grant : ['READ'], to: 'Viewer',
+                        {grant : ['READ'], to: 'Display',
                         //row level security
                         where :'bankName = $user.spiderman'},
-                        {grant : ['WRITE','DELETE'], to: 'Editor'}
+                        {grant : ['WRITE','DELETE'], to: 'Edit'}
                       ])
                        as projection on master.employees;
     entity ProductSet as projection on master.product;
@@ -18,10 +18,10 @@ service CatalogService @(path : 'CatalogService', requires : 'authenticated-user
     entity StatusCode as projection on master.StatusCode;
     //@Capabilities : { Deletable : false }
     entity PurchaseOrderSet @(
-                    //   restrict :[
-                    //     {grant : ['READ'], to: 'Viewer'},
-                    //     {grant : ['WRITE','DELETE'], to: 'Editor'}
-                    //   ],
+                      restrict :[
+                        {grant : ['READ'], to: 'Display'},
+                        {grant : ['WRITE','DELETE'], to: 'Edit'}
+                      ],
                       odata.draft.enabled: true,
                       Common.DefaultValuesFunction: 'getDefaultValue') as projection on transaction.purchaseorder{
         //CDS expression language
