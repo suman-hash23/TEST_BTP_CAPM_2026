@@ -34,7 +34,8 @@
             "anubhav": {
               "password": "Welcome1",
               "roles": [
-                "Viewer"
+                "Display",
+                "Edit"
               ],
               "attr": {
                 "spiderman": [
