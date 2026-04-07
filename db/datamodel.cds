@@ -1,6 +1,7 @@
 namespace anubhav.db;
 using { anubhav.common as common } from './commons';
 using { Currency, cuid  } from '@sap/cds/common';
+using { Attachments } from '@cap-js/attachments';
 
 context master {
   // foreign key table  
@@ -86,7 +87,8 @@ context transaction {
        LIFECYCLE_STATUS : String(1) @(title : '{i18n>LIFECYCLE_STATUS}');
        OVERALL_STATUS : String(1) @(title : '{i18n>OVERALL_STATUS}');
        NOTE : String(100) @(title : '{i18n>NOTE}');
-       Items : Composition of many poitems on Items.PARENT_KEY = $self @(title : '{i18n>ITEM_KEY}')
+       Items : Composition of many poitems on Items.PARENT_KEY = $self @(title : '{i18n>ITEM_KEY}');
+       attachments: Composition of many Attachments
     }
 
     entity poitems : common.Amount, cuid {
