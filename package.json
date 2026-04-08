@@ -7,6 +7,7 @@
     "@cap-js/attachments": "^3.11.0",
     "@cap-js/hana": "^2",
     "@sap/cds": "^9",
+    "@sap/cds-mtxs": "^3",
     "@sap/xssec": "^4",
     "express": "^4"
   },
@@ -59,8 +60,13 @@
       "[production]": {
         "auth": {
           "kind": "xsuaa"
-        }
+        },
+        "multitenancy": true
+      },
+      "[with-mtx]": {
+        "multitenancy": true
       }
-    }
+    },
+    "profile": "with-mtx-sidecar"
   }
 }
