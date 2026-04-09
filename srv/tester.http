@@ -9,13 +9,14 @@ http://localhost:4004/odata/v4/CatalogService/$metadata
 
 ###Read my all employee data
 http://localhost:4004/odata/v4/CatalogService/EmployeeSet
-Authorization: Basic anubhav:Welcome1
+Authorization: Basic ananya:ananya
 
 ###Read only the relevant fields from all employees
 http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$select=ID,nameFirst,nameLast,sex,email
 
 ###To get the total count
 http://localhost:4004/odata/v4/CatalogService/EmployeeSet/$count
+Authorization: Basic anubhav:Welcome1
 
 ###pagination -- load data by chunk by chunk for performance - $top & $skip
 http://localhost:4004/odata/v4/CatalogService/EmployeeSet?$top=2&$skip=2
@@ -63,7 +64,7 @@ http://localhost:4004/odata/v4/CDSservice/ProductSet/74867AD200E41EDBA5D8B06B26E
 
 ###create operation to insert data into database
 POST http://localhost:4004/odata/v4/CatalogService/EmployeeSet
-Authorization: Basic ananya:ananya
+Authorization: Basic anubhav:Welcome1
 Content-Type: application/json
 
 {
@@ -84,11 +85,12 @@ Content-Type: application/json
 }
 
 ###to update the data
-PATCH http://localhost:4004/odata/v4/CatalogService/EmployeeSet/71c48b68-036d-4fcd-9b9f-26d0e70da702
+PATCH http://localhost:4004/odata/v4/CatalogService/EmployeeSet/02BD2137-0890-1EEA-A6C2-BB55C198A7FB
+Authorization: Basic anubhav:Welcome1
 Content-Type: application/json
 
 {
-    "salaryAmount" : "199999"
+    "salaryAmount" : "19999"
 }
 
 

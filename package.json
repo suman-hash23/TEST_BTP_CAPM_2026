@@ -34,6 +34,7 @@
           "kind": "mocked",
           "users": {
             "anubhav": {
+              "tenant" : "t1",
               "password": "Welcome1",
               "roles": [
                 "Display",
@@ -46,10 +47,17 @@
               }
             },
             "ananya": {
+              "tenant" : "t2",
               "password": "ananya",
               "roles": [
-                "Editor"
-              ]
+                "Display",
+                "Edit"
+              ],
+              "attr": {
+                "spiderman": [
+                  "My Bank of London"
+                ]
+              }              
             }
           }
         },
