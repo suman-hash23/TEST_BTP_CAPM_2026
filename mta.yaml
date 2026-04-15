@@ -1,5 +1,5 @@
 _schema-version: 3.3.0
-ID: mycapm
+ID: mycapmana
 version: 1.0.0
 description: "A simple CAP project."
 parameters:
@@ -12,7 +12,7 @@ build-parameters:
         - npx cds build --production
 modules:
 ###custom adding of module for UI
-  - name: mycapm-ui
+  - name: mycapmana-ui
     type: nodejs
     path: app
     parameters:
@@ -21,7 +21,7 @@ modules:
     build-parameters:
       builder: npm-ci
     requires:
-      - name: mycapm-auth
+      - name: mycapmana-auth
       - name: srv-api
         group: destinations
         properties:
@@ -30,7 +30,7 @@ modules:
            forwardAuthToken: true
            url: '~{srv-url}'          
 ###end of module
-  - name: mycapm-srv
+  - name: mycapmana-srv
     type: nodejs
     path: gen/srv
     parameters:
@@ -43,45 +43,45 @@ modules:
         properties:
           srv-url: ${default-url}
     requires:
-      - name: mycapm-auth
-      - name: mycapm-db
+      - name: mycapmana-auth
+      - name: mycapmana-db
 
-  - name: mycapm-db-deployer
+  - name: mycapmana-db-deployer
     type: hdb
     path: gen/db
     parameters:
       buildpack: nodejs_buildpack
     requires:
-      - name: mycapm-db
+      - name: mycapmana-db
 
 resources:
-  - name: mycapm-auth
+  - name: mycapmana-auth
     type: org.cloudfoundry.managed-service
     parameters:
       service: xsuaa
       service-plan: application
       path: ./xs-security.json
       config:
-        xsappname: mycapm-${org}-${space}
+        xsappname: mycapmana-${org}-${space}
         tenant-mode: dedicated
         oauth2-configuration:
           credential-types:
             - "binding-secret"
             - "x509"
         role-collections:
-          - name: 'Viewer (mycapm ${org}-${space})'
+          - name: 'Viewer (mycapmana ${org}-${space})'
             description: 'generated'
             role-template-references:
               - '$XSAPPNAME.Viewer'
-          - name: 'Editor (mycapm ${org}-${space})'
+          - name: 'Editor (mycapmana ${org}-${space})'
             description: 'generated'
             role-template-references:
               - '$XSAPPNAME.Editor'
-          - name: 'userattributes (mycapm ${org}-${space})'
+          - name: 'userattributes (mycapmana ${org}-${space})'
             description: 'generated'
             role-template-references:
               - '$XSAPPNAME.userattributes'
-  - name: mycapm-db
+  - name: mycapmana-db
     type: com.sap.xs.hdi-container
     parameters:
       service: hana
